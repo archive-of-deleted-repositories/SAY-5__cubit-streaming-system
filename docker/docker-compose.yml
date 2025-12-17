@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  streaming-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: cubit-streaming:latest
+    container_name: cubit-streaming-1
+
+    # GPU passthrough - required nvidia-container-toolkit on host
+    # Had some trouble getting this to work initially
+    # Make sure to install: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=video,compute,utility
+
+    # Mount camera device
+    devices:
+      - /dev/video0:/dev/video0
+
+    # Host network mode for lowest latency
+    # Tried bridge mode but added ~5ms latency
+    network_mode: host
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu, video]
+
+    restart: unless-stopped
+
+  # Example: Multiple streaming instances for different cameras
+  # streaming-service-2:
+  #   image: cubit-streaming:latest
+  #   container_name: cubit-streaming-2
+  #   runtime: nvidia
+  #   environment:
+  #     - NVIDIA_VISIBLE_DEVICES=all
+  #     - NVIDIA_DRIVER_CAPABILITIES=video,compute,utility
+  #   devices:
+  #     - /dev/video1:/dev/video0  # Map different camera to /dev/video0 in container
+  #   network_mode: host
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2.0'
+  #         memory: 2G
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu, video]
+  #   restart: unless-stopped
