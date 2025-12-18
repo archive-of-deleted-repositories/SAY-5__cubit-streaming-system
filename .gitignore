@@ -38,3 +38,6 @@ core.*
 *.tmp
 *.temp
 .claude/
+.claude/
+__MACOSX/
+.DS_Store
