@@ -17,9 +17,9 @@ This document provides detailed information about current system limitations, wo
   - Industry-standard RTP protocol with standardized fragmentation
 
 **Impact**:
-- ❌ Cannot use `ffplay udp://...` or `vlc udp://...` directly
-- ✅ Server-side code is production-ready and tested
-- ⚠️ Requires custom client implementation for reassembly
+- Cannot use ffplay udp://... or vlc udp://... directly
+- Server-side code is production-ready and tested
+- Requires custom client implementation for reassembly
 
 **Current Workaround**:
 The provided `scripts/client_example.sh` demonstrates the expected client behavior:
@@ -67,10 +67,10 @@ echo -n "HELLO" | nc -u -w1 SERVER_IP 5000
 - Reduce bitrate to ensure keyframes < 1400 bytes
 - Set `initial_bitrate=500000` (500 kbps) in config
 - Use `encoder_preset=ultrafast` for smaller keyframes
-- ⚠️ Significantly reduces quality
+- Significantly reduces quality
 - Only suitable for initial testing
 
-**Testing Status**: ⚠️ Fragmentation logic implemented and structurally sound, but end-to-end client testing requires hardware setup.
+**Testing Status**: Fragmentation logic implemented and structurally sound, but end-to-end client testing requires hardware setup.
 
 ---
 
@@ -79,19 +79,19 @@ echo -n "HELLO" | nc -u -w1 SERVER_IP 5000
 **Issue**: This system was developed with production-quality code following industry best practices, but **has not been tested on actual biomedical microscope camera hardware**.
 
 **What Has Been Verified**:
-- ✅ Code compiles successfully with all dependencies
-- ✅ Architecture follows proven multi-threaded patterns
-- ✅ FFmpeg/V4L2/NVENC APIs used correctly per documentation
-- ✅ Error handling and logging comprehensive
-- ✅ Docker containerization tested on compatible systems
+- Code compiles successfully with all dependencies
+- Architecture follows proven multi-threaded patterns
+- FFmpeg/V4L2/NVENC APIs used correctly per documentation
+- Error handling and logging comprehensive
+- Docker containerization tested on compatible systems
 
 **What Requires Hardware Verification**:
-- ⚠️ V4L2 camera capture on actual microscope cameras
-- ⚠️ YUYV → YUV420P color space conversion accuracy
-- ⚠️ NVENC encoding on target GPU hardware
-- ⚠️ End-to-end latency measurements
-- ⚠️ Network streaming to actual client workstations
-- ⚠️ Frame timing and synchronization under load
+- V4L2 camera capture on actual microscope cameras
+- YUYV to YUV420P color space conversion accuracy
+- NVENC encoding on target GPU hardware
+- End-to-end latency measurements
+- Network streaming to actual client workstations
+- Frame timing and synchronization under load
 
 **Risk Assessment**:
 - **Low Risk**: Standard V4L2 API, should work with any compliant camera
@@ -126,11 +126,11 @@ echo -n "HELLO" | nc -u -w1 SERVER_IP 5000
    ```
 
 3. **Incremental Validation**:
-   - ✓ Verify camera opens without errors
-   - ✓ Check frames are captured (look for "Captured frame" logs)
-   - ✓ Confirm encoding succeeds (check for "Encoded frame" logs)
-   - ✓ Validate network transmission (use `tcpdump`)
-   - ✓ Test client connectivity
+   - Verify camera opens without errors
+   - Check frames are captured (look for "Captured frame" logs)
+   - Confirm encoding succeeds (check for "Encoded frame" logs)
+   - Validate network transmission (use tcpdump)
+   - Test client connectivity
 
 4. **Performance Validation**:
    - Monitor console output for latency metrics
@@ -153,14 +153,14 @@ echo -n "HELLO" | nc -u -w1 SERVER_IP 5000
 **Issue**: While comprehensive validation is now implemented (v1.0.2), extreme edge cases may still exist.
 
 **What's Validated** (as of v1.0.2):
-- ✅ Camera dimensions (320-3840 × 240-2160, must be even for H.264)
-- ✅ Frame rate (1-240 fps, prevents division by zero)
-- ✅ Bitrate ranges (100 kbps - 50 Mbps)
-- ✅ Logical constraints (min_bitrate ≤ max_bitrate)
-- ✅ Valid encoder presets
-- ✅ Port numbers (1024-65535)
-- ✅ Queue sizes (2-100)
-- ✅ Boolean value parsing
+- Camera dimensions (320-3840 x 240-2160, must be even for H.264)
+- Frame rate (1-240 fps, prevents division by zero)
+- Bitrate ranges (100 kbps - 50 Mbps)
+- Logical constraints (min_bitrate <= max_bitrate)
+- Valid encoder presets
+- Port numbers (1024-65535)
+- Queue sizes (2-100)
+- Boolean value parsing
 
 **Potential Edge Cases**:
 - Camera hardware may not support all "valid" resolutions
@@ -307,25 +307,25 @@ sws_ctx_ = sws_getContext(
 
 ### Before Deploying to Production
 
-- [ ] Hardware compatibility verified on target camera
-- [ ] End-to-end latency measured and acceptable
-- [ ] Frame drops measured (should be 0%)
-- [ ] GPU utilization stays below 80%
-- [ ] Network tested with expected client count
-- [ ] Configuration validation tested with invalid inputs
-- [ ] Docker deployment tested with GPU passthrough
-- [ ] Client connectivity tested from target workstations
-- [ ] Documentation reviewed and updated
-- [ ] Backup/recovery procedures established
+- Hardware compatibility verified on target camera
+- End-to-end latency measured and acceptable
+- Frame drops measured (should be 0%)
+- GPU utilization stays below 80%
+- Network tested with expected client count
+- Configuration validation tested with invalid inputs
+- Docker deployment tested with GPU passthrough
+- Client connectivity tested from target workstations
+- Documentation reviewed and updated
+- Backup/recovery procedures established
 
 ### Acceptance Criteria
 
-- ✓ Latency < 70ms (measured with hardware timestamps)
-- ✓ Consistent 60fps (no frame drops over 1 hour)
-- ✓ Bitrate adapts correctly to network conditions
-- ✓ System recovers gracefully from camera disconnection
-- ✓ No crashes with malformed configuration files
-- ✓ NVENC fallback to CPU works correctly
+- Latency < 70ms (measured with hardware timestamps)
+- Consistent 60fps (no frame drops over 1 hour)
+- Bitrate adapts correctly to network conditions
+- System recovers gracefully from camera disconnection
+- No crashes with malformed configuration files
+- NVENC fallback to CPU works correctly
 
 ---
 

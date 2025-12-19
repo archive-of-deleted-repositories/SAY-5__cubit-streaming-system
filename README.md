@@ -335,31 +335,31 @@ Originally the bitrate would oscillate wildly because it adjusted immediately ba
 
 ## Known Limitations
 
-1. **Custom Packet Fragmentation**: This implementation uses a custom fragmentation protocol with `PacketHeader` (frameId, fragmentIndex, totalFragments). Standard clients like `ffplay` and `vlc` **cannot reassemble these fragments** without modification. The provided `scripts/client_example.sh` demonstrates the expected client behavior, but a full production client would need to implement fragment reassembly logic. Consider migrating to industry-standard RTP/RTCP for broader client compatibility.
+**Custom Packet Fragmentation**: This implementation uses a custom fragmentation protocol with PacketHeader (frameId, fragmentIndex, totalFragments). Standard clients like ffplay and vlc cannot reassemble these fragments without modification. The provided scripts/client_example.sh demonstrates the expected client behavior, but a full production client would need to implement fragment reassembly logic. Consider migrating to industry-standard RTP/RTCP for broader client compatibility.
 
-2. **Hardware Testing Required**: This system was developed with production-grade code quality but **has not been tested on actual biomedical camera hardware**. The V4L2 capture, NVENC encoding, and network streaming components are based on standard APIs and should work correctly, but verification on target hardware is essential before deployment.
+**Hardware Testing**: This system was developed with production-grade code quality but has not been tested on actual biomedical camera hardware. The V4L2 capture, NVENC encoding, and network streaming components are based on standard APIs and should work correctly, but verification on target hardware is essential before deployment.
 
-3. **Configuration Validation**: The system now includes comprehensive bounds checking in `config_loader.h` to prevent crashes from invalid configuration values (e.g., `fps=0`, odd dimensions, out-of-range bitrates). However, extreme edge cases or hardware-specific limitations may still require adjustment.
+**Configuration Validation**: The system includes comprehensive bounds checking in config_loader.h to prevent crashes from invalid configuration values (e.g., fps=0, odd dimensions, out-of-range bitrates). However, extreme edge cases or hardware-specific limitations may still require adjustment.
 
-4. **UDP Packet Loss**: No retransmission or FEC. On lossy networks, consider adding RTP/RTCP.
+**UDP Packet Loss**: No retransmission or FEC. On lossy networks, consider adding RTP/RTCP.
 
-5. **No Authentication**: Any client can connect. Add encryption/auth for production.
+**No Authentication**: Any client can connect. Add encryption/auth for production.
 
-6. **Single Camera**: Currently hardcoded to one camera. Easy to extend for multiple.
+**Single Camera**: Currently hardcoded to one camera. Easy to extend for multiple.
 
-7. **Linux Only**: V4L2 is Linux-specific. Would need DirectShow/AVFoundation for Windows/Mac.
+**Linux Only**: V4L2 is Linux-specific. Would need DirectShow/AVFoundation for Windows/Mac.
 
-8. **YUYV Format**: Assumes camera outputs YUYV. Some cameras may need format conversion.
+**YUYV Format**: Assumes camera outputs YUYV. Some cameras may need format conversion.
 
 ## Future Improvements
 
-- [ ] Implement RTP for better packet handling
-- [ ] Add WebRTC support for browser-based clients
-- [ ] Multi-camera support with camera selection API
-- [ ] Hardware-accelerated color space conversion (CUDA kernel)
-- [ ] Lock-free queues for better performance
-- [ ] Metrics export (Prometheus/Grafana)
-- [ ] Client authentication and encryption
+- Implement RTP for better packet handling
+- Add WebRTC support for browser-based clients
+- Multi-camera support with camera selection API
+- Hardware-accelerated color space conversion (CUDA kernel)
+- Lock-free queues for better performance
+- Metrics export (Prometheus/Grafana)
+- Client authentication and encryption
 
 ## License
 

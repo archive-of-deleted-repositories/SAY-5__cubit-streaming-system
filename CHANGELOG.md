@@ -5,20 +5,20 @@ All notable changes to the CUBIT Streaming System will be documented in this fil
 ## [1.0.2] - 2024-06-22
 
 ### Added
-- **Comprehensive configuration validation** in `src/utils/config_loader.h`
+- Comprehensive configuration validation in src/utils/config_loader.h
   - Bounds checking for all numeric parameters (width, height, fps, bitrate, ports, queue sizes)
   - Prevents critical crashes from invalid values (e.g., fps=0 causing division by zero)
   - H.264 compatibility validation (dimensions must be even)
-  - Logical constraint validation (min_bitrate ≤ max_bitrate)
+  - Logical constraint validation (min_bitrate <= max_bitrate)
   - Encoder preset enumeration validation
   - Path validation for camera device files
   - Detailed error messages showing valid ranges and actual values
-- **KNOWN_ISSUES.md** documentation
+- KNOWN_ISSUES.md documentation
   - Detailed analysis of current limitations
   - Workarounds and recommended solutions
   - Testing procedures for hardware deployment
   - Future enhancement roadmap
-- **Enhanced README.md** with expanded Known Limitations section
+- Enhanced README.md with expanded Known Limitations section
   - Documents custom fragmentation protocol requirements
   - Clarifies hardware testing status
   - Provides context for production deployment
@@ -29,8 +29,8 @@ All notable changes to the CUBIT Streaming System will be documented in this fil
 - Default values used when validation fails (with warnings logged)
 
 ### Technical Details
-- Added `ConfigLoader::Limits` structure with constexpr bounds
-  - Camera: 320-3840 × 240-2160, 1-240 fps
+- Added ConfigLoader::Limits structure with constexpr bounds
+  - Camera: 320-3840 x 240-2160, 1-240 fps
   - Bitrate: 100 kbps - 50 Mbps
   - Ports: 1024-65535
   - Queue sizes: 2-100

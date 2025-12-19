@@ -12,11 +12,11 @@ cd /Users/say/Desktop/Streaming_System/cubit-streaming-system
 ```
 
 This will:
-- ✓ Verify all files are present
-- ✓ Test that the project builds
-- ✓ Check documentation is complete
-- ✓ Ensure no build artifacts are included
-- ✓ Validate configuration files
+- Verify all files are present
+- Test that the project builds
+- Check documentation is complete
+- Ensure no build artifacts are included
+- Validate configuration files
 
 **Expected Output**: "All tests passed! Ready to commit and push to Git"
 
@@ -289,17 +289,17 @@ On GitHub, go to Settings:
 
 Before considering it "done":
 
-- [ ] All tests pass (`./scripts/pre_push_test.sh`)
-- [ ] Git repository initialized
-- [ ] All files committed
-- [ ] Remote repository created on GitHub
-- [ ] Code pushed successfully
-- [ ] README renders correctly on GitHub
-- [ ] Repository has description and topics
-- [ ] License file included
-- [ ] .gitignore prevents build artifacts
-- [ ] Repository is public (if using for portfolio)
-- [ ] URL added to resume/portfolio
+- All tests pass (./scripts/pre_push_test.sh)
+- Git repository initialized
+- All files committed
+- Remote repository created on GitHub
+- Code pushed successfully
+- README renders correctly on GitHub
+- Repository has description and topics
+- License file included
+- .gitignore prevents build artifacts
+- Repository is public (if using for portfolio)
+- URL added to resume/portfolio
 
 ## Portfolio Use
 
